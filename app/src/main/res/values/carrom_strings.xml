@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Carrom strings extracted from Auto-Agent5 app/src/main/res/values/strings.xml at ea02d43. -->
+<resources>
+    <string name="settings_carrom_solver_label">On-Device Carrom Physics Solver (0 API)</string>
+    <string name="settings_carrom_solver_desc">Computes Ghost-Ball cut angles, blocked-path checks, foul guards, and rolling-coin waits locally with 0 API calls.</string>
+    <string name="settings_carrom_rule_label">Carrom Game Rule Mode</string>
+    <string name="settings_carrom_rule_freestyle_desc">Freestyle: White, Black &amp; Red (Queen) are all legal targets — ONLY striker pocket scratch is a foul.</string>
+    <string name="settings_carrom_rule_discpool_desc">Disc Pool: Only your selected coin color &amp; Red (Queen) are targeted; pocketing only opponent coins or scratching is a foul.</string>
+    <string name="carrom_train_title">Carrom Watch &amp; Learn Coach</string>
+    <string name="carrom_train_desc">Play a few Carrom matches yourself while TapPilot watches silently (0 touches), saves winning cut angles, striker positions, power &amp; friction feel, and applies them when playing autonomously.</string>
+    <string name="action_start_carrom_train">Start Watch &amp; Learn Training</string>
+    <string name="action_stop_carrom_train">Training Live — Stop Watch Mode</string>
+    <string name="action_export_carrom_brain">Export JSON (GitHub)</string>
+    <string name="action_import_carrom_brain">Import JSON</string>
+    <string name="cd_export_carrom_brain">Export learned Carrom training JSON for GitHub backup</string>
+    <string name="cd_import_carrom_brain">Import saved Carrom training JSON from device or GitHub</string>
+    <string name="action_open_calibration">Board &amp; Aim Calibration Tool</string>
+
+    <!-- Also used by CarromCalibrationDialog (names do not contain "carrom"): -->
+    <string name="calibration_title">Board Calibration &amp; Aim Lab</string>
+    <string name="cd_calibration_preview">Interactive Carrom board screenshot calibration canvas</string>
+    <string name="cd_close_calibration">Close calibration tool</string>
+</resources>
