@@ -1,0 +1,16 @@
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+# Signing — NEVER commit keystores or passwords
+*.jks
+*.keystore
+debug.keystore
+my-upload-key.jks
+# App secrets — NEVER commit
+.env
+app/google-services.json
+# OS
+.DS_Store
