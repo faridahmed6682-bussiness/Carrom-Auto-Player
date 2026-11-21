@@ -97,7 +97,34 @@ jobs:
           if-no-files-found: ignore
 
       - name: Build Debug APK
-        run: gradle :app:assembleDebug --no-daemon --console=plain
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug --no-daemon --console=plain 2>&1 | tee gradle-assemble.log
+
+      # The test-failure summary above only runs when the TEST step fails, so an
+      # assembleDebug failure used to leave no readable error anywhere (job logs
+      # need admin rights). This step prints the assemble error into the run
+      # summary, which anyone can read on the run page.
+      - name: Print Assemble Failure Summary
+        if: failure()
+        run: |
+          echo "### Gradle Assemble Failure Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f gradle-assemble.log ]; then
+            grep -E '^> Task .* FAILED|^e: |^FAILURE:|^Caused by:|Execution failed for task' gradle-assemble.log | head -n 40 | tee -a "$GITHUB_STEP_SUMMARY" || true
+            echo "--- What went wrong ---" | tee -a "$GITHUB_STEP_SUMMARY"
+            awk '/^\* What went wrong:/{flag=1} /^\* Try:/{flag=0} flag' gradle-assemble.log | head -n 30 | tee -a "$GITHUB_STEP_SUMMARY" || true
+          fi
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Assemble Failure Report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: assemble-failure-report
+          path: |
+            gradle-assemble.log
+          if-no-files-found: ignore
 
       - name: Build Signed Release APK (if keystore secrets configured)
         env:
