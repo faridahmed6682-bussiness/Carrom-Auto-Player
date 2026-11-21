@@ -4,6 +4,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
 
+private const val MAX_LESSONS_PER_CATEGORY = 12
+
 /**
  * SLIMMED extraction — NOT the full AgentKnowledgeStore from Auto-Agent5.
  *
@@ -15,6 +17,19 @@ import java.util.Locale
  */
 class AgentKnowledgeStore {
     companion object {
+        fun mergeLessons(existing: List<String>, additions: List<String>): List<String> {
+            val seen = LinkedHashSet<String>()
+            val result = mutableListOf<String>()
+            (existing + additions).forEach { raw ->
+                val clean = raw.trim()
+                val canonical = clean.lowercase(Locale.ROOT)
+                if (clean.isNotBlank() && seen.add(canonical)) {
+                    result.add(clean)
+                }
+            }
+            return result.takeLast(MAX_LESSONS_PER_CATEGORY)
+        }
+
         fun findBestMatchingPlaybook(playbooks: List<TaskPlaybook>, goal: String): TaskPlaybook? {
             if (playbooks.isEmpty() || goal.isBlank()) return null
             val goalNorm = goal.lowercase(Locale.ROOT)
